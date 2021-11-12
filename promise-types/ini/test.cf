@@ -1,0 +1,11 @@
+promise agent ini
+{
+  interpreter => "/usr/bin/python3";
+  path => "/home/craig/cfe/modules/promise-types/ini/ini.py";
+}
+
+bundle agent main
+{
+  ini:
+    "/home/craig/cfe/modules/promise-types/ini/test.ini";
+}
