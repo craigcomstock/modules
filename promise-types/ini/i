@@ -1,0 +1,3 @@
+cp orig.ini test.ini
+rsync -av ../../libraries/python/cfengine.py .
+cf-agent -KIf ./test.cf
