@@ -27,6 +27,7 @@ body package_method winget
       !package_method_winget:accept_source_agreements|!package_method_winget:accept_package_agreements::
         # the package name is appended to the end of this command, so we try here to make a command which conveys information only
         package_add_command => "$(sys.winsysdir)\\WindowsPowerShell\\v1.0\\powershell.exe -Command \"Write-Host You must set some vars for package-method-winget to work;exit 1; rem Trying to add package:";
+
 }
 
 # switch to module specific namespace to avoid name collisions
@@ -51,5 +52,14 @@ bundle agent package_method_winget
         if => "!accept_source_agreements";
       "Please specify if you wish to --accept-package-agreements when using winget package method promises with cfbs inputs or the variable data:package_method_winget.accept_package_agreements having the value yes or no"
         if => "!accept_package_agreements";
+
+  packages:
+    windows::
+    "${data:package_method_winget.installed}"
+      package_method => winget,
+      package_policy => "add";
+    "${data:package_method_winget.uninstalled}"
+      package_method => winget,
+      package_policy => "delete";
 }
 
