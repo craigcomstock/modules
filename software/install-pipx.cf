@@ -19,17 +19,16 @@ bundle agent install_pipx_main
       expression => returnszero("command -v pipx >/dev/null", "useshell");
 
   packages:
-    "pipx" classes => if_ok("pipx_installed");
+    "pipx" classes => if_ok("pipx_package_ok");
 
   files:
-    pipx_installed::
-      "/opt/pipx/."
+    pipx_installed|pipx_package_ok::
+      "/opt/pipx"
         perms => mog("755", "root", "root"),
         comment => "/opt/pipx in some cases will be 700 which prevents non-root users from running installed commands.";
 
       "/opt/pipx/venvs"
         perms => mog("755", "root", "root"),
+        depth_search => recurse_with_base("1"),
         comment => "/opt/pipx/venvs in some cases will be 700 which prevents non-root users from running installed commands.";
-
-  reports:
 }

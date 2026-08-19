@@ -45,9 +45,16 @@ bundle agent install_ansible_main
 
   commands:
     pipx_installed.!ansible_installed::
-      "${install_ansible_command}" contain => in_shell;
+      "${install_ansible_command}" contain => in_shell_umask(022),
+      comment => "The default umask of 077 would create /opt/pipx/venvs/ansible which is inaccessible to everyone but root, so use 022 instead.";
 
   reports:
     ansible_installed::
       "ansible_installed";
+}
+
+body contain in_shell_umask(umask)
+{
+  useshell => "true";
+  umask => "${umask}";
 }
