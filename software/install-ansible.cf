@@ -26,9 +26,6 @@ bundle agent install_ansible_main
       expression => returnszero("command -v ansible >/dev/null", "useshell");
 
   vars:
-      string => "${data:install_ansible.version}",
-      if => isvariable("data:install_ansible.version");
-
     "install_ansible_command"
       string => "${base_command}==${data:install_ansible.version}",
       if => isvariable("data:install_ansible.version");
