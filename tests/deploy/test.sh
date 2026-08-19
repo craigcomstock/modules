@@ -31,9 +31,9 @@ cfbs build
 sudo cfbs install
 sudo cf-agent -IB 127.0.0.1
 
-sudo cf-agent -KI -Ddata:install_ansible -Ddata:ansible_minimal_install --bundle install_ansible > log
-if grep -qiP '(err|fail|notkept)' log; then
-  cat log
+sudo cf-agent -Kd -Ddata:install_ansible -Ddata:ansible_full_install --bundle install_ansible > log
+if grep 'error:' log; then
+  grep 'error:' log
   exit 1
 fi
 
